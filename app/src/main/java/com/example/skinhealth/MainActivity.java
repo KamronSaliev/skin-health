@@ -17,9 +17,12 @@ import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -176,6 +179,15 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "Detect button was pressed");
 
             // TODO: Implement logic
+
+            // Split to the list of single channels (RGB)
+            ArrayList<Mat> dst = new ArrayList<>(3);
+            Core.split(srcMat, dst);
+            srcMat = dst.get(1);
+
+            // Adaptive threshold of the image
+            Imgproc.adaptiveThreshold(srcMat, srcMat, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 5);
+
         }
 
         convertBmp = Bitmap.createBitmap(srcMat.cols(), srcMat.rows(), Bitmap.Config.ARGB_8888);
