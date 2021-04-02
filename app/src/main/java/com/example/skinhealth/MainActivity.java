@@ -3,12 +3,6 @@ package com.example.skinhealth;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int      VIEW_MODE_SEPIA     = 2;
     public static final int      VIEW_MODE_PIXELIZE  = 3;
     public static final int      VIEW_MODE_POSTERIZE = 4;
+    public static final int      VIEW_MODE_DETECT    = 5;
 
     private Size mSize0;
 
@@ -52,17 +47,12 @@ public class MainActivity extends AppCompatActivity {
     private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS: {
-                    Log.i(TAG, "OpenCV loaded successfully");
+            if (status == LoaderCallbackInterface.SUCCESS) {
+                Log.i(TAG, "OpenCV loaded successfully");
 
-                    onInit();
-                }
-                break;
-                default: {
-                    super.onManagerConnected(status);
-                }
-                break;
+                onInit();
+            } else {
+                super.onManagerConnected(status);
             }
         }
     };
@@ -138,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
         imageView.setImageBitmap(onConvertImage());
     }
 
+    public void onClickDetect(View view) {
+        viewMode = VIEW_MODE_DETECT;
+        imageView.setImageBitmap(onConvertImage());
+    }
+
     public Bitmap onConvertImage() {
         Mat srcMat = new Mat (initialBmp.getHeight(), initialBmp.getWidth(), CvType.CV_8UC3);
         bmp = initialBmp.copy(Bitmap.Config.ARGB_8888, true);
@@ -145,21 +140,42 @@ public class MainActivity extends AppCompatActivity {
 
         mIntermediateMat = new Mat();
         Bitmap convertBmp = initialBmp;
+
+        // DEFAULT RGBA
         if (MainActivity.viewMode == MainActivity.VIEW_MODE_RGBA) {
             return convertBmp;
-        } else if (MainActivity.viewMode == MainActivity.VIEW_MODE_CANNY) {
+        }
+
+        // CANNY
+        else if (MainActivity.viewMode == MainActivity.VIEW_MODE_CANNY) {
             Imgproc.Canny(srcMat, mIntermediateMat, 80, 90);
             Imgproc.cvtColor(mIntermediateMat, srcMat, Imgproc.COLOR_GRAY2RGBA, 4);
-        } else if (MainActivity.viewMode == MainActivity.VIEW_MODE_SEPIA) {
+        }
+
+        // SEPIA
+        else if (MainActivity.viewMode == MainActivity.VIEW_MODE_SEPIA) {
             Core.transform(srcMat, srcMat, mSepiaKernel);
-        } else if (MainActivity.viewMode == MainActivity.VIEW_MODE_PIXELIZE) {
+        }
+
+        // PIXELIZE
+        else if (MainActivity.viewMode == MainActivity.VIEW_MODE_PIXELIZE) {
             Imgproc.resize(srcMat, mIntermediateMat, mSize0, 0.1, 0.1, Imgproc.INTER_NEAREST);
             Imgproc.resize(mIntermediateMat, srcMat, srcMat.size(), 0., 0., Imgproc.INTER_NEAREST);
-        } else if (MainActivity.viewMode == MainActivity.VIEW_MODE_POSTERIZE) {
+        }
+
+        // POSTERIZE
+        else if (MainActivity.viewMode == MainActivity.VIEW_MODE_POSTERIZE) {
             Imgproc.Canny(srcMat, mIntermediateMat, 80, 90);
             srcMat.setTo(new Scalar(0, 0, 0, 255), mIntermediateMat);
             Core.convertScaleAbs(srcMat, mIntermediateMat, 1./16, 0);
             Core.convertScaleAbs(mIntermediateMat, srcMat, 16, 0);
+        }
+
+        // DETECT
+        else if (MainActivity.viewMode == MainActivity.VIEW_MODE_DETECT) {
+            Log.i(TAG, "Detect button was pressed");
+
+            // TODO: Implement logic
         }
 
         convertBmp = Bitmap.createBitmap(srcMat.cols(), srcMat.rows(), Bitmap.Config.ARGB_8888);
