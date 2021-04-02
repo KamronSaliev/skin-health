@@ -4,5 +4,6 @@
     <string name="btn_sepia">Sepia</string>
     <string name="btn_pixelize">Pixelize</string>
     <string name="btn_posterize">Posterize</string>
+    <string name="btn_detect">Detect</string>
     <string name="btn_reset">Reset</string>
 </resources>
