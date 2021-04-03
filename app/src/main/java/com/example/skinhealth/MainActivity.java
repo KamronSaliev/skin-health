@@ -198,13 +198,14 @@ public class MainActivity extends AppCompatActivity {
 
             // TODO: Implement logic
 
-            mIntermediateMat = mSrcMat;
+            mIntermediateMat = mSrcMat.clone();
 
             // Split to the list of single channels (RGB)
-            ArrayList<Mat> imgBGR = new ArrayList<>(3);
-            Core.split(mIntermediateMat, imgBGR);
+            // ArrayList<Mat> imgBGR = new ArrayList<>(3);
+            // Core.split(mIntermediateMat, imgBGR);
+            // mIntermediateMat = imgBGR.get(1);
 
-            mIntermediateMat = imgBGR.get(1);
+            Imgproc.cvtColor(mIntermediateMat, mIntermediateMat, Imgproc.COLOR_BGR2GRAY);
 
             // Temporary
             // Imgproc.blur(mIntermediateMat, mIntermediateMat, new Size(3, 3));
@@ -229,22 +230,14 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i = 0; i < contours.size(); i++) {
 
-//                // Minimum size allowed for consideration
-//                MatOfPoint2f approxCurve = new MatOfPoint2f();
-//                MatOfPoint2f contour2f = new MatOfPoint2f(contours.get(i).toArray());
-//
-//                // Processing on mMOP2f1 which is in type MatOfPoint2f
-//                double approxDistance = Imgproc.arcLength(contour2f,true) * 0.02f;
-//                Imgproc.approxPolyDP(contour2f, approxCurve, approxDistance,true);
-//
-//                MatOfPoint point = new MatOfPoint(approxCurve.toArray());
-
                 int minArea = 20;
                 int maxArea = 150;
 
                 if (Imgproc.contourArea(contours.get(i)) > minArea && Imgproc.contourArea(contours.get(i)) < maxArea) {
                     Rect rect = Imgproc.boundingRect(contours.get(i));
                     Mat imgROI = new Mat(mSrcMat, rect);
+
+                    // Imgproc.cvtColor(imgROI, imgROI, Imgproc.COLOR_GRAY2BGR);
                     Imgproc.cvtColor(imgROI, imgROI, Imgproc.COLOR_BGR2HSV);
                     Scalar meanColor = mean(imgROI);
 
@@ -258,14 +251,29 @@ public class MainActivity extends AppCompatActivity {
                     centers[i] = new Point();
                     Imgproc.minEnclosingCircle(contoursPoly[i], centers[i], radius[i]);
 
-                    Imgproc.rectangle(mSrcMat, boundRect[i].tl(), boundRect[i].br(), new Scalar(255, 0, 0, 255), 2);
+                    if (radius[i][0] > 20)
+                        continue;
+
+                    // Used to analyze some test subject
+                    int testMinArea = 53;
+                    int testMaxArea = 55;
+
+                    if (Imgproc.contourArea(contours.get(i)) > testMinArea && Imgproc.contourArea(contours.get(i)) < testMaxArea) {
+                        Imgproc.rectangle(mSrcMat, boundRect[i].tl(), boundRect[i].br(), new Scalar(255, 0, 0, 255), 2);
+                        Imgproc.rectangle(mIntermediateMat, boundRect[i].tl(), boundRect[i].br(), new Scalar(255, 0, 0, 255), 2);
+                        Log.d(TAG, "TEST SUBJECT" + meanColor.toString());
+                    }
+                    else {
+                        Imgproc.rectangle(mSrcMat, boundRect[i].tl(), boundRect[i].br(), new Scalar(0, 0, 0, 255), 2);
+                        Imgproc.rectangle(mIntermediateMat, boundRect[i].tl(), boundRect[i].br(), new Scalar(0, 0, 0, 255), 2);
+                    }
+
                     count++;
                 }
             }
 
-
             // TODO: Temporary
-            // mSrcMat = mIntermediateMat;
+            // mSrcMat = mIntermediateMat.clone();
 
 
             String stringCounter = getResources().getString(R.string.tv_count);
