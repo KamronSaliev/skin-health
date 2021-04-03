@@ -10,8 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SkinHealth">
         <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.SkinHealth.NoActionBar"></activity>
+        <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <activity android:name=".AuthActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>
@@ -23,17 +27,17 @@
         <activity android:name=".MainActivity" />
     </application>
     <uses-feature
-        android:name="android.hardware.camera.front.autofocus"
-        android:required="false" />
-    <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
-
     <uses-feature
         android:name="android.hardware.camera.front"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.camera.front.autofocus"
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
