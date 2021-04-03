@@ -2,6 +2,7 @@ package com.example.skinhealth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
@@ -28,6 +30,8 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static org.opencv.core.Core.mean;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,9 +54,12 @@ public class MainActivity extends AppCompatActivity {
     public static int viewMode = VIEW_MODE_RGBA;
 
     private ImageView imageView;
+    private TextView textViewCounter;
+
     private Bitmap bmp;
     private Bitmap initialBmp;
     private ArrayList<MatOfPoint> contours = new ArrayList<>();
+    private int count = 0;
 
     private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -76,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageView = (ImageView) findViewById(R.id.profile_image);
+        textViewCounter = (TextView) findViewById(R.id.tv_count);
     }
 
     @Override
@@ -143,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         imageView.setImageBitmap(onConvertImage());
     }
 
+    @SuppressLint("DefaultLocale")
     public Bitmap onConvertImage() {
         mSrcMat = new Mat (initialBmp.getHeight(), initialBmp.getWidth(), CvType.CV_8UC3);
         bmp = initialBmp.copy(Bitmap.Config.ARGB_8888, true);
@@ -187,91 +196,80 @@ public class MainActivity extends AppCompatActivity {
 
             Random rng = new Random(10000);
 
-            int threshold = 100;
-
             // TODO: Implement logic
 
             mIntermediateMat = mSrcMat;
 
             // Split to the list of single channels (RGB)
-            ArrayList<Mat> dst = new ArrayList<>(3);
-            Core.split(mIntermediateMat, dst);
-            mIntermediateMat = dst.get(1);
+            ArrayList<Mat> imgBGR = new ArrayList<>(3);
+            Core.split(mIntermediateMat, imgBGR);
 
-            Imgproc.blur(mIntermediateMat, mIntermediateMat, new Size(3, 3));
+            mIntermediateMat = imgBGR.get(1);
 
+            // Temporary
+            // Imgproc.blur(mIntermediateMat, mIntermediateMat, new Size(3, 3));
 
             // Adaptive threshold of the image
             Imgproc.adaptiveThreshold(mIntermediateMat, mIntermediateMat, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 5);
 
-
             // Dilation
-            int kernelSize = 1;
-            Mat element = Imgproc.getStructuringElement(
-                    Imgproc.CV_SHAPE_CROSS,
-                    new Size(2 * kernelSize + 1, 2 * kernelSize + 1),
-                    new Point(kernelSize, kernelSize));
+            Imgproc.dilate(mIntermediateMat, mIntermediateMat, new Mat(), new Point(-1, -1), 1);
 
-            Imgproc.dilate(mIntermediateMat, mIntermediateMat, element);
-
-            mHierarchy = new Mat();
             contours.clear();
+            mHierarchy = new Mat();
             Imgproc.findContours(mIntermediateMat, contours, mHierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 
-            /*
-            Mat drawing = Mat.zeros(mSrcMat.size(), CvType.CV_8UC3);
-            Random rnd = new Random(10000);
-            for (int i = 0; i < contours.size(); i++) {
-                Scalar color = new Scalar(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                Imgproc.drawContours(drawing, contours, i, color, 01, Core.LINE_8, mHierarchy, 0, new Point());
-            }
-            mSrcMat = drawing;
-            */
 
-            /*Mat cannyOutput = new Mat();
-            Imgproc.Canny(mSrcMat, cannyOutput, threshold, threshold * 3);
-
-            List<MatOfPoint> contours = new ArrayList<>();
-            mHierarchy = new Mat();
-            Imgproc.findContours(cannyOutput, contours, mHierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);*/
-
+            // Test
             MatOfPoint2f[] contoursPoly  = new MatOfPoint2f[contours.size()];
             Rect[] boundRect = new Rect[contours.size()];
             Point[] centers = new Point[contours.size()];
             float[][] radius = new float[contours.size()][1];
-
-            for (int i = 0; i < contours.size(); i++) {
-                contoursPoly[i] = new MatOfPoint2f();
-                Imgproc.approxPolyDP(new MatOfPoint2f(contours.get(i).toArray()), contoursPoly[i], 3, true);
-                boundRect[i] = Imgproc.boundingRect(new MatOfPoint(contoursPoly[i].toArray()));
-                centers[i] = new Point();
-                Imgproc.minEnclosingCircle(contoursPoly[i], centers[i], radius[i]);
-            }
-
-            Mat drawing = Mat.zeros(mIntermediateMat.size(), CvType.CV_8UC3);
-            // drawing = mIntermediateMat;
-            List<MatOfPoint> contoursPolyList = new ArrayList<>(contoursPoly.length);
-            for (MatOfPoint2f poly : contoursPoly) {
-                contoursPolyList.add(new MatOfPoint(poly.toArray()));
-            }
+            // Test
 
             for (int i = 0; i < contours.size(); i++) {
 
-                Scalar color = new Scalar(rng.nextInt(256), rng.nextInt(256), rng.nextInt(256));
-                Imgproc.drawContours(drawing, contoursPolyList, i, color);
+//                // Minimum size allowed for consideration
+//                MatOfPoint2f approxCurve = new MatOfPoint2f();
+//                MatOfPoint2f contour2f = new MatOfPoint2f(contours.get(i).toArray());
+//
+//                // Processing on mMOP2f1 which is in type MatOfPoint2f
+//                double approxDistance = Imgproc.arcLength(contour2f,true) * 0.02f;
+//                Imgproc.approxPolyDP(contour2f, approxCurve, approxDistance,true);
+//
+//                MatOfPoint point = new MatOfPoint(approxCurve.toArray());
 
                 int minArea = 20;
                 int maxArea = 150;
-                if (Imgproc.contourArea(contours.get(i)) > minArea && Imgproc.contourArea(contours.get(i)) < maxArea) {
-                    // TODO: implement sorting based on the size
-                }
 
-                // Imgproc.rectangle(drawing, boundRect[i].tl(), boundRect[i].br(), color, 2);
-                Imgproc.circle(drawing, centers[i], (int) radius[i][0], color, 2);
+                if (Imgproc.contourArea(contours.get(i)) > minArea && Imgproc.contourArea(contours.get(i)) < maxArea) {
+                    Rect rect = Imgproc.boundingRect(contours.get(i));
+                    Mat imgROI = new Mat(mSrcMat, rect);
+                    Imgproc.cvtColor(imgROI, imgROI, Imgproc.COLOR_BGR2HSV);
+                    Scalar meanColor = mean(imgROI);
+
+                    Log.d(TAG, meanColor.toString());
+
+                    Imgproc.cvtColor(imgROI, imgROI, Imgproc.COLOR_HSV2BGR);
+
+                    contoursPoly[i] = new MatOfPoint2f();
+                    Imgproc.approxPolyDP(new MatOfPoint2f(contours.get(i).toArray()), contoursPoly[i], 3, true);
+                    boundRect[i] = Imgproc.boundingRect(new MatOfPoint(contoursPoly[i].toArray()));
+                    centers[i] = new Point();
+                    Imgproc.minEnclosingCircle(contoursPoly[i], centers[i], radius[i]);
+
+                    Imgproc.rectangle(mSrcMat, boundRect[i].tl(), boundRect[i].br(), new Scalar(255, 0, 0, 255), 2);
+                    count++;
+                }
             }
 
-            mSrcMat = drawing;
 
+            // TODO: Temporary
+            // mSrcMat = mIntermediateMat;
+
+
+            String stringCounter = getResources().getString(R.string.tv_count);
+            textViewCounter.setText(String.format("%s %d", stringCounter, count));
         }
 
         convertBmp = Bitmap.createBitmap(mSrcMat.cols(), mSrcMat.rows(), Bitmap.Config.ARGB_8888);
