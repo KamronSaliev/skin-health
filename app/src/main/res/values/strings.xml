@@ -22,4 +22,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="choose_the_way">Choose the way to upload an image</string>
+    <string name="take_a_new_photo">Camera</string>
+    <string name="upload_from_gallery">Gallery</string>
 </resources>

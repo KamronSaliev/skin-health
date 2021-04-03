@@ -9,15 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SkinHealth">
+        <activity android:name=".DialogActivity"></activity>
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.SkinHealth.NoActionBar"></activity>
+            android:theme="@style/Theme.SkinHealth.NoActionBar" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".AuthActivity" />
-        <activity android:name=".StartActivity">
+        <activity android:name=".StartActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,17 +29,17 @@
         <activity android:name=".MainActivity" />
     </application>
     <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.camera.front"
         android:required="false" />
-
     <uses-feature
         android:name="android.hardware.camera.front.autofocus"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />

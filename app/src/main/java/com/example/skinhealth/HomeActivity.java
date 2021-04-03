@@ -1,12 +1,16 @@
 package com.example.skinhealth;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 
 import com.example.skinhealth.ui.gallery.GalleryFragment;
 import com.example.skinhealth.ui.home.HomeFragment;
+import com.example.skinhealth.ui.login.LoginActivity;
 import com.example.skinhealth.ui.slideshow.SlideshowFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;

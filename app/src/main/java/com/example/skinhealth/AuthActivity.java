@@ -22,6 +22,7 @@ public class AuthActivity extends AppCompatActivity {
                 System.out.println("Log In Button Clicked");
                 Intent activityLogIn = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(activityLogIn);
+                finish();
             }
         });
     }
