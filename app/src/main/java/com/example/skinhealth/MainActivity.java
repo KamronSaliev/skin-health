@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
+import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -29,8 +31,6 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static org.opencv.core.Core.mean;
-
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Mat mSrcMat;
     private Mat mIntermediateMat;
+    // private Mat mResizedMat;
+    private Mat mMaskMat;
     private Mat mHierarchy;
 
     public static int viewMode = VIEW_MODE_RGBA;
@@ -143,13 +145,24 @@ public class MainActivity extends AppCompatActivity {
             // Random seed
             Random rng = new Random(10000);
 
-            // TODO: Implement logic
-            // mIntermediateMat = mSrcMat.clone();
+            Size srcSize = mSrcMat.size();
+            Log.i(TAG, srcSize.toString());
 
-            Mat mResized = new Mat();
-            Imgproc.resize(mSrcMat, mResized, new Size(512, 512));
-            mSrcMat = mResized.clone();
-            mIntermediateMat = mResized.clone();
+            // TODO: Resize logic, might be used later
+            int referencedHeightInDP = 500;
+            float scale = getResources().getDisplayMetrics().density;
+            int referencedHeightInPixels = (int) (referencedHeightInDP * scale + 0.5f);
+
+            // mResizedMat = new Mat();
+            // Imgproc.resize(mSrcMat, mResizedMat, new Size(srcSize.width, referencedHeightInPixels));
+
+            // mSrcMat = mResizedMat.clone();
+            mIntermediateMat = mSrcMat.clone();
+
+            // TODO: extract to constants
+            int brightnessAlpha = 1;
+            int brightnessBeta = 50;
+            mIntermediateMat.convertTo(mIntermediateMat, -1, 1, 50);
 
             Imgproc.cvtColor(mIntermediateMat, mIntermediateMat, Imgproc.COLOR_BGR2GRAY);
 
@@ -162,64 +175,55 @@ public class MainActivity extends AppCompatActivity {
             // Dilation
             Imgproc.dilate(mIntermediateMat, mIntermediateMat, new Mat(), new Point(-1, -1), 1);
 
+            // Implementation of addition of the mask to the main intermediate Mat
+            Bitmap maskBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.acne_test_mild_regionsmask);
+            mMaskMat = new Mat (maskBitmap.getHeight(), maskBitmap.getWidth(), CvType.CV_8UC3);
+            Utils.bitmapToMat(maskBitmap, mMaskMat);
+
+            Imgproc.resize(mMaskMat, mMaskMat, new Size(mIntermediateMat.size().width, mIntermediateMat.size().height));
+            Imgproc.cvtColor(mMaskMat, mMaskMat, Imgproc.COLOR_BGR2GRAY);
+            Imgproc.threshold(mMaskMat, mMaskMat, 100, 255, Imgproc.THRESH_BINARY_INV);
+            Core.bitwise_not(mMaskMat, mMaskMat);
+            Core.add(mMaskMat, mIntermediateMat, mIntermediateMat);
+
+            // Main logic of detecting acne contours
             count = 0;
             contours.clear();
             mHierarchy = new Mat();
             Imgproc.findContours(mIntermediateMat, contours, mHierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
 
-
-            // Test
             MatOfPoint2f[] contoursPoly  = new MatOfPoint2f[contours.size()];
             Rect[] boundRect = new Rect[contours.size()];
             Point[] centers = new Point[contours.size()];
             float[][] radius = new float[contours.size()][1];
-            // Test
 
             for (int i = 0; i < contours.size(); i++) {
 
+                // TODO: extract to constants
                 int minArea = 20;
                 int maxArea = 150;
 
                 if (Imgproc.contourArea(contours.get(i)) > minArea && Imgproc.contourArea(contours.get(i)) < maxArea) {
                     Rect rect = Imgproc.boundingRect(contours.get(i));
-                    Mat imgROI = new Mat(mSrcMat, rect);
-
-                    // Imgproc.cvtColor(imgROI, imgROI, Imgproc.COLOR_GRAY2BGR);
-                    Imgproc.cvtColor(imgROI, imgROI, Imgproc.COLOR_BGR2HSV);
-                    Scalar meanColor = mean(imgROI);
-
-                    Log.d(TAG, meanColor.toString());
-
-                    Imgproc.cvtColor(imgROI, imgROI, Imgproc.COLOR_HSV2BGR);
-
                     contoursPoly[i] = new MatOfPoint2f();
                     Imgproc.approxPolyDP(new MatOfPoint2f(contours.get(i).toArray()), contoursPoly[i], 3, true);
                     boundRect[i] = Imgproc.boundingRect(new MatOfPoint(contoursPoly[i].toArray()));
                     centers[i] = new Point();
                     Imgproc.minEnclosingCircle(contoursPoly[i], centers[i], radius[i]);
 
-                    if (radius[i][0] > 20)
+
+                    // TODO: extract to constants
+                    if (boundRect[i].height < 3 || boundRect[i].width < 3)
                         continue;
 
-                    // Used to analyze some test subject
-                    int testMinArea = 53;
-                    int testMaxArea = 55;
-
-                    if (Imgproc.contourArea(contours.get(i)) > testMinArea && Imgproc.contourArea(contours.get(i)) < testMaxArea) {
-                        Imgproc.rectangle(mSrcMat, boundRect[i].tl(), boundRect[i].br(), new Scalar(255, 0, 0, 255), 2);
-                        Imgproc.rectangle(mIntermediateMat, boundRect[i].tl(), boundRect[i].br(), new Scalar(255, 0, 0, 255), 2);
-                        Log.d(TAG, "TEST SUBJECT" + meanColor.toString());
-                    }
-                    else {
-                        Imgproc.rectangle(mSrcMat, boundRect[i].tl(), boundRect[i].br(), new Scalar(0, 0, 0, 255), 2);
-                        Imgproc.rectangle(mIntermediateMat, boundRect[i].tl(), boundRect[i].br(), new Scalar(0, 0, 0, 255), 2);
-                    }
+                    // used to draw rectangles on the source Mat
+                    Imgproc.rectangle(mSrcMat, boundRect[i].tl(), boundRect[i].br(), new Scalar(0, 255, 0, 255), 1);
 
                     count++;
                 }
             }
 
-            // TODO: Temporary
+            // TODO: Temporary, remove, used for visualization of the mask used to find contours
             // mSrcMat = mIntermediateMat.clone();
 
             String stringCounter = getResources().getString(R.string.tv_count);
@@ -228,9 +232,12 @@ public class MainActivity extends AppCompatActivity {
 
         convertBmp = Bitmap.createBitmap(mSrcMat.cols(), mSrcMat.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(mSrcMat, convertBmp);
+
         mSrcMat.release();
         mIntermediateMat.release();
-        // mHierarchy.release();
+        mMaskMat.release();
+        mHierarchy.release();
+
         return convertBmp;
     }
 }
