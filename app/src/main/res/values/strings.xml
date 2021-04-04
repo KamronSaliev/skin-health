@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SkinHealth</string>
+    <string name="btn_canny">Canny</string>
+    <string name="btn_sepia">Sepia</string>
+    <string name="btn_pixelize">Pixelize</string>
+    <string name="btn_posterize">Posterize</string>
+    <string name="btn_detect">Detect</string>
+    <string name="btn_reset">Reset</string>
+    <string name="tv_count">Count:</string>
 </resources>
