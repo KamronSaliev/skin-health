@@ -26,9 +26,27 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="229dp"
         android:layout_marginBottom="70dp"
-        android:text="Button"
+
+        android:drawableCenter="@drawable/camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_home" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="204dp"
+        android:layout_marginEnd="153dp"
+        android:layout_marginBottom="57dp"
+        android:src="@drawable/account"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/text_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
