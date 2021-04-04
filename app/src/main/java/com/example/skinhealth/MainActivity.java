@@ -16,7 +16,6 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
-import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -28,7 +27,6 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static org.opencv.core.Core.mean;
@@ -38,17 +36,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     public static final int VIEW_MODE_RGBA = 0;
-    public static final int VIEW_MODE_CANNY = 1;
-    public static final int VIEW_MODE_SEPIA = 2;
-    public static final int VIEW_MODE_PIXELIZE = 3;
-    public static final int VIEW_MODE_POSTERIZE = 4;
-    public static final int VIEW_MODE_DETECT = 5;
+    public static final int VIEW_MODE_DETECT = 1;
 
     private Size size;
 
     private Mat mSrcMat;
     private Mat mIntermediateMat;
-    private Mat mSepiaKernel;
     private Mat mHierarchy;
 
     public static int viewMode = VIEW_MODE_RGBA;
@@ -111,34 +104,8 @@ public class MainActivity extends AppCompatActivity {
         mIntermediateMat = new Mat();
         size = new Size();
 
-        mSepiaKernel = new Mat(4, 4, CvType.CV_32F);
-        mSepiaKernel.put(0, 0, /* R */0.189f, 0.769f, 0.393f, 0f);
-        mSepiaKernel.put(1, 0, /* G */0.168f, 0.686f, 0.349f, 0f);
-        mSepiaKernel.put(2, 0, /* B */0.131f, 0.534f, 0.272f, 0f);
-        mSepiaKernel.put(3, 0, /* A */0.000f, 0.000f, 0.000f, 1f);
-
         BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
         initialBmp = bitmapDrawable.getBitmap();
-    }
-
-    public void onClickCanny(View view) {
-        viewMode = VIEW_MODE_CANNY;
-        imageView.setImageBitmap(onConvertImage());
-    }
-
-    public void onClickSepia(View view) {
-        viewMode = VIEW_MODE_SEPIA;
-        imageView.setImageBitmap(onConvertImage());
-    }
-
-    public void onClickPixelize(View view) {
-        viewMode = VIEW_MODE_PIXELIZE;
-        imageView.setImageBitmap(onConvertImage());
-    }
-
-    public void onClickPosterize(View view) {
-        viewMode = VIEW_MODE_POSTERIZE;
-        imageView.setImageBitmap(onConvertImage());
     }
 
     public void onClickReset(View view) {
@@ -162,32 +129,11 @@ public class MainActivity extends AppCompatActivity {
 
         // DEFAULT RGBA
         if (MainActivity.viewMode == MainActivity.VIEW_MODE_RGBA) {
+            count = 0;
+            String stringCounter = getResources().getString(R.string.tv_count);
+            textViewCounter.setText(String.format("%s %d", stringCounter, count));
+
             return convertBmp;
-        }
-
-        // CANNY
-        else if (MainActivity.viewMode == MainActivity.VIEW_MODE_CANNY) {
-            Imgproc.Canny(mSrcMat, mIntermediateMat, 80, 90);
-            Imgproc.cvtColor(mIntermediateMat, mSrcMat, Imgproc.COLOR_GRAY2RGBA, 4);
-        }
-
-        // SEPIA
-        else if (MainActivity.viewMode == MainActivity.VIEW_MODE_SEPIA) {
-            Core.transform(mSrcMat, mSrcMat, mSepiaKernel);
-        }
-
-        // PIXELIZE
-        else if (MainActivity.viewMode == MainActivity.VIEW_MODE_PIXELIZE) {
-            Imgproc.resize(mSrcMat, mIntermediateMat, size, 0.1, 0.1, Imgproc.INTER_NEAREST);
-            Imgproc.resize(mIntermediateMat, mSrcMat, mSrcMat.size(), 0., 0., Imgproc.INTER_NEAREST);
-        }
-
-        // POSTERIZE
-        else if (MainActivity.viewMode == MainActivity.VIEW_MODE_POSTERIZE) {
-            Imgproc.Canny(mSrcMat, mIntermediateMat, 80, 90);
-            mSrcMat.setTo(new Scalar(0, 0, 0, 255), mIntermediateMat);
-            Core.convertScaleAbs(mSrcMat, mIntermediateMat, 1./16, 0);
-            Core.convertScaleAbs(mIntermediateMat, mSrcMat, 16, 0);
         }
 
         // DETECT
@@ -216,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
             // Dilation
             Imgproc.dilate(mIntermediateMat, mIntermediateMat, new Mat(), new Point(-1, -1), 1);
 
+            count = 0;
             contours.clear();
             mHierarchy = new Mat();
             Imgproc.findContours(mIntermediateMat, contours, mHierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
@@ -274,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
 
             // TODO: Temporary
             // mSrcMat = mIntermediateMat.clone();
-
 
             String stringCounter = getResources().getString(R.string.tv_count);
             textViewCounter.setText(String.format("%s %d", stringCounter, count));
