@@ -194,21 +194,21 @@ public class MainActivity extends AppCompatActivity {
         else if (MainActivity.viewMode == MainActivity.VIEW_MODE_DETECT) {
             Log.i(TAG, "Detect button was pressed");
 
+            // Random seed
             Random rng = new Random(10000);
 
             // TODO: Implement logic
+            // mIntermediateMat = mSrcMat.clone();
 
-            mIntermediateMat = mSrcMat.clone();
-
-            // Split to the list of single channels (RGB)
-            // ArrayList<Mat> imgBGR = new ArrayList<>(3);
-            // Core.split(mIntermediateMat, imgBGR);
-            // mIntermediateMat = imgBGR.get(1);
+            Mat mResized = new Mat();
+            Imgproc.resize(mSrcMat, mResized, new Size(512, 512));
+            mSrcMat = mResized.clone();
+            mIntermediateMat = mResized.clone();
 
             Imgproc.cvtColor(mIntermediateMat, mIntermediateMat, Imgproc.COLOR_BGR2GRAY);
 
-            // Temporary
-            // Imgproc.blur(mIntermediateMat, mIntermediateMat, new Size(3, 3));
+            // Blur
+            Imgproc.blur(mIntermediateMat, mIntermediateMat, new Size(5, 5));
 
             // Adaptive threshold of the image
             Imgproc.adaptiveThreshold(mIntermediateMat, mIntermediateMat, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 5);
