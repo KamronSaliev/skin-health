@@ -1,25 +1,22 @@
 package com.example.skinhealth;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.example.skinhealth.ui.home.DialogClickListener;
 
-public class DialogActivity extends Dialog {
+public class DialogActivity extends AlertDialog {
 
-    private Context context;
     private DialogClickListener dialogClickListener;
-    private ImageView CameraButton, GalleryButton;
+    private ImageView cameraButton;
+    private ImageView galleryButton;
 
     public DialogActivity(@NonNull Context context, DialogClickListener dialogClickListener) {
         super(context);
-        this.context = context;
         this.dialogClickListener = dialogClickListener;
     }
 
@@ -27,25 +24,19 @@ public class DialogActivity extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog);
-        CameraButton = findViewById(R.id.camera_button);
-        GalleryButton = findViewById(R.id.gallery_button);
-        CameraButton.setClickable(true);
-        GalleryButton.setClickable(true);
+        cameraButton = findViewById(R.id.camera_button);
+        galleryButton = findViewById(R.id.gallery_button);
+        cameraButton.setClickable(true);
+        galleryButton.setClickable(true);
 
-        CameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogClickListener.onClickCamera();
-                dismiss();
-            }
+        cameraButton.setOnClickListener(v -> {
+            dialogClickListener.onClickCamera();
+            dismiss();
         });
 
-        GalleryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogClickListener.onClickGallery();
-                dismiss();
-            }
+        galleryButton.setOnClickListener(v -> {
+            dialogClickListener.onClickGallery();
+            dismiss();
         });
     }
 }
