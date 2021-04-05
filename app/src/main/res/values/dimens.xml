@@ -5,4 +5,11 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="dimen_damage_level_text_size">36sp</dimen>
+    <dimen name="dimen_damage_level_text_view_size">20sp</dimen>
+    <dimen name="dimen_pimples_text_size">20sp</dimen>
+    <dimen name="dimen_pimples_amount_size">50sp</dimen>
+    <dimen name="dimen_last_updated_text_size">17sp</dimen>
+    <dimen name="dimen_diet_text_size">15sp</dimen>
+    <dimen name="dimen_stats_title_text_size">25sp</dimen>
 </resources>

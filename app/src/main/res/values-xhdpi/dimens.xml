@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimen_stats_title_text_size">25sp</dimen>
+    <dimen name="dimen_last_updated_text_size">17sp</dimen>
+    <dimen name="dimen_pimples_text_size">20sp</dimen>
+    <dimen name="dimen_pimples_amount_size">40sp</dimen>
+    <dimen name="dimen_diet_text_size">15sp</dimen>
+
+</resources>
