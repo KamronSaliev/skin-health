@@ -29,7 +29,7 @@
     <string name="text_loading">Loading…</string>
     <string name="current_stats_title">Current statistics: </string>
     <string name="last_upd_title">Last updated: </string>
-    <string name="date_and_time">30.03.21, 12:30 pm</string>
+    <string name="date_and_time">01.01.1970, 00:00</string>
     <string name="num_of_pimples_title">Number of pimples: </string>
     <string name="damage_text">Damage level:</string>
     <string name="damage_level">Mild</string>
