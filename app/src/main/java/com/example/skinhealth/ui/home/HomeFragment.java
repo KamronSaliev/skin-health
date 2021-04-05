@@ -1,9 +1,7 @@
 package com.example.skinhealth.ui.home;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +28,7 @@ import com.example.skinhealth.DialogActivity;
 import com.example.skinhealth.DietScrollingActivity;
 import com.example.skinhealth.R;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,11 +38,10 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
 
     private ImageButton mainButton;
-    private ImageView dietButton;
+    private ImageView dietButtonView;
     private DialogActivity dialog;
     private ImageView imageView;
     private Bitmap imageBmp = null;
-    private Bitmap rotateImageBmp = null;
     private String currentPhotoPath;
 
     private static final int GALLERY_REQUEST_CODE = 1;
@@ -56,10 +52,10 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         mainButton = root.findViewById(R.id.button_main);
-        dietButton = root.findViewById(R.id.dietImage);
         imageView = root.findViewById(R.id.imageView2);
-
+        dietButtonView = root.findViewById(R.id.dietImage);
         onDietButtonClick();
+
         onAddPhotoButtonClick();
 
         return root;
@@ -87,12 +83,9 @@ public class HomeFragment extends Fragment {
     }
 
     public void onDietButtonClick() {
-        dietButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent activityDiet = new Intent(getActivity().getApplicationContext(), DietScrollingActivity.class);
-                startActivity(activityDiet);
-            }
+        dietButtonView.setOnClickListener(v -> {
+            Intent activityDiet = new Intent(getActivity().getApplicationContext(), DietScrollingActivity.class);
+            startActivity(activityDiet);
         });
     }
 
@@ -107,27 +100,19 @@ public class HomeFragment extends Fragment {
                 try {
                     imageBmp = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), uri);
                     imageView.setImageBitmap(imageBmp);
+                    Log.d(TAG, "Image from Gallery is set");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             else if (requestCode == CAMERA_REQUEST_CODE) {
-                setPic();
+                setPicture();
+                Log.d(TAG, "Image from Camera is set");
             }
         }
     }
 
-    public static Bitmap rotate(Bitmap bitmap, int degree) {
-        int w = bitmap.getWidth();
-        int h = bitmap.getHeight();
-
-        Matrix mtx = new Matrix();
-        mtx.setRotate(degree);
-
-        return Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, true);
-    }
-
-    private void setPic() {
+    private void setPicture() {
         int width = imageView.getWidth();
         int height = imageView.getHeight();
 
@@ -149,35 +134,45 @@ public class HomeFragment extends Fragment {
 
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
 
-        Matrix matrix = new Matrix();
-        Uri uri = getImageUri(getActivity().getApplicationContext(), bitmap);
-        matrix.postRotate(getOrientation(getActivity().getApplicationContext(), uri));
+        ExifInterface ei = null;
+        try {
+            ei = new ExifInterface(currentPhotoPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
 
-        if (rotateImageBmp != null)
-            rotateImageBmp.recycle();
+        Bitmap rotatedBitmap = null;
+        switch(orientation) {
 
-        rotateImageBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix,true);
-        imageView.setImageBitmap(rotateImageBmp);
-    }
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                rotatedBitmap = rotate(bitmap, 90);
+                break;
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                rotatedBitmap = rotate(bitmap, 180);
+                break;
 
-    private int getOrientation(Context context, Uri photoUri) {
-        Cursor cursor = context
-                .getContentResolver()
-                .query(photoUri, new String[] { MediaStore.Images.ImageColumns.ORIENTATION },null, null, null);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                rotatedBitmap = rotate(bitmap, 270);
+                break;
 
-        if (cursor.getCount() != 1) {
-            return -1;
+            case ExifInterface.ORIENTATION_NORMAL:
+            default:
+                rotatedBitmap = bitmap;
         }
 
-        cursor.moveToFirst();
-        return cursor.getInt(0);
+        imageView.setImageBitmap(rotatedBitmap);
+    }
+
+    public static Bitmap rotate(Bitmap bitmap, int degree) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        Matrix mtx = new Matrix();
+        mtx.setRotate(degree);
+
+        return Bitmap.createBitmap(bitmap, 0, 0, width, height, mtx, true);
     }
 
     private File createImageFile(){
@@ -191,10 +186,6 @@ public class HomeFragment extends Fragment {
                     ".jpg",  /* suffix */
                     storageDir      /* directory */
             );
-
-            FileOutputStream fos = new FileOutputStream(image);
-            ExifInterface exif = new ExifInterface(image.toString());
-
         } catch (IOException e) {
             e.printStackTrace();
         }
