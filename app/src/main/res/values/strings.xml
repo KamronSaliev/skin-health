@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Skin Health</string>
 
-    // Main Activity, used for deteftion
+    // Used for detection
     <string name="btn_detect">Detect</string>
     <string name="btn_reset">Reset</string>
     <string name="tv_count">Count:</string>
