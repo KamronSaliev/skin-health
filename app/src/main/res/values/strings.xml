@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SkinHealth</string>
+    <string name="app_name">Skin Health</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -44,6 +44,7 @@
     <string name="contact">Contact us</string>
     <string name="logout">Log out</string>
     <string name="string_signup">Sign up</string>
+    <string name="logo_img">Logo Image</string>
     <string name="diet_picture">diet picture</string>
     <string name="product_image">product image</string>
     <string name="camera_button">camera button</string>

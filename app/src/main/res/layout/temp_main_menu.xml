@@ -243,21 +243,22 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 >
 
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="0dp"
+                <ImageButton
+                    android:id="@+id/button_main"
+                    android:layout_width="108dp"
                     android:layout_height="108dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/camera_button"
-                    app:srcCompat="@drawable/photo" />
-            </LinearLayout>
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/choose_the_way"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/photo" />
+            </FrameLayout>
 
 
 

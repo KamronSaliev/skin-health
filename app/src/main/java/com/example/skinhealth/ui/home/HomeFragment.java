@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +37,7 @@ import com.example.skinhealth.ui.login.LoginActivity;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    Button mainButton;
+    ImageButton mainButton;
     DialogActivity dialog;
     private ImageView imageView;
 
