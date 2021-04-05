@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             Imgproc.dilate(mIntermediateMat, mIntermediateMat, new Mat(), new Point(-1, -1), 1);
 
             // Implementation of addition of the mask to the main intermediate Mat
-            Bitmap maskBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.acne_test_severe_regionsmask);
+            Bitmap maskBitmap = BitmapFactory.decodeResource(getResources(), R.drawable._skinhealth_mask);
             mMaskMat = new Mat (maskBitmap.getHeight(), maskBitmap.getWidth(), CvType.CV_8UC3);
             Utils.bitmapToMat(maskBitmap, mMaskMat);
 
