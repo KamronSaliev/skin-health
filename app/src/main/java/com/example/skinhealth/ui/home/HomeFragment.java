@@ -1,11 +1,13 @@
 package com.example.skinhealth.ui.home;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,19 +36,27 @@ import com.example.skinhealth.MainActivity;
 import com.example.skinhealth.R;
 import com.example.skinhealth.ui.login.LoginActivity;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    ImageButton mainButton;
+    Button mainButton;
     DialogActivity dialog;
+
+
+    private static Bitmap Image = null;
+    private static Bitmap rotateImage = null;
     private ImageView imageView;
+    private static final int GALLERY = 1;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.temp_main_menu, container, false);
-       /* final TextView textView = root.findViewById(R.id.text_home);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+       final TextView textView = root.findViewById(R.id.text_home);
         mainButton = root.findViewById(R.id.button_main);
         onAddPhotoButtonClick();
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -55,11 +65,11 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        imageView = root.findViewById(R.id.imageView2);*/
+        imageView = root.findViewById(R.id.imageView2);
         return root;
     }
 
-/*
+
     public void onAddPhotoButtonClick() {
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,9 +81,13 @@ public class HomeFragment extends Fragment {
                         startActivity(activityCamera);
                     }
                     public void onClickGallery() {
-                        System.out.println("gallery");
-                        Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(pickPhoto , 1);
+                        imageView.setImageBitmap(null);
+                        if (Image != null)
+                            Image.recycle();
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY);
                     }
                 });
                 dialog.setCancelable(true);
@@ -83,31 +97,41 @@ public class HomeFragment extends Fragment {
                 dialog.show();
             }
         });
-    }*/
-/*
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode != Activity.RESULT_CANCELED) {
-            switch (requestCode) {
-                case 1:
-                    if (resultCode == Activity.RESULT_OK && data != null) {
-                        Uri selectedImage =  data.getData();
-                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        if (selectedImage != null) {
-                            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-                                    filePathColumn, null, null, null);
-                            if (cursor != null) {
-                                cursor.moveToFirst();
-                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                                String picturePath = cursor.getString(columnIndex);
-                                imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-                                cursor.close();
-                            }
-                        }
-
-                    }
-                    break;
+        if (requestCode == GALLERY && resultCode != 0) {
+            Uri mImageUri = data.getData();
+            try {
+                Image = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), mImageUri);
+                if (getOrientation(getActivity().getApplicationContext(), mImageUri) != 0) {
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(getOrientation(getActivity().getApplicationContext(), mImageUri));
+                    if (rotateImage != null)
+                        rotateImage.recycle();
+                    rotateImage = Bitmap.createBitmap(Image, 0, 0, Image.getWidth(), Image.getHeight(), matrix,true);
+                    imageView.setImageBitmap(rotateImage);
+                } else
+                    imageView.setImageBitmap(Image);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-    }*/
+
+    }
+
+    public static int getOrientation(Context context, Uri photoUri) {
+        Cursor cursor = context.getContentResolver().query(photoUri,
+                new String[] { MediaStore.Images.ImageColumns.ORIENTATION },null, null, null);
+
+        if (cursor.getCount() != 1) {
+            return -1;
+        }
+        cursor.moveToFirst();
+        return cursor.getInt(0);
+    }
+
 }
