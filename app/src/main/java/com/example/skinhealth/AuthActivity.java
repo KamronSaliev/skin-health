@@ -18,13 +18,10 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
 
         ImageButton logInButton = findViewById(R.id.loginbutton);
-        logInButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                System.out.println("Log In Button Clicked");
-                Intent activityLogIn = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(activityLogIn);
-                finish();
-            }
+        logInButton.setOnClickListener(v -> {
+            Intent activityLogIn = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(activityLogIn);
+            finish();
         });
     }
 }
