@@ -17,8 +17,12 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".AuthActivity" />
-        <activity android:name=".StartActivity"
+        <activity
+            android:name=".AuthActivity"
+            android:theme="@style/Theme.SkinHealth.NoActionBar"/>
+        <activity
+            android:name=".StartActivity"
+            android:theme="@style/Theme.SkinHealth.NoActionBar"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

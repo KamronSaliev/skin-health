@@ -6,42 +6,78 @@
     android:layout_height="match_parent"
     tools:context=".AuthActivity">
 
-    <TextView
-        android:id="@+id/textView2"
+    <ImageView
+        android:id="@+id/background_surprised"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="182dp"
-        android:layout_marginTop="347dp"
-        android:layout_marginEnd="170dp"
-        android:layout_marginBottom="365dp"
-        android:text="TextView"
+        android:contentDescription="@string/info_text"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/main_text_auth"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/start_version_3" />
+
+    <ImageView
+        android:id="@+id/main_text_auth"
+        android:layout_width="368dp"
+        android:layout_height="69dp"
+        android:contentDescription="@"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.039"
+        app:srcCompat="@drawable/skin_health" />
+
+    <TextView
+        android:id="@+id/content_text_auth"
+        android:layout_width="359dp"
+        android:layout_height="71dp"
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:text="@string/info_text"
+        android:textAlignment="center"
+        android:textColor="#F5F5F5"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/background_surprised"
+        app:layout_constraintStart_toStartOf="@+id/background_surprised"
+        app:layout_constraintTop_toTopOf="@+id/background_surprised"
+        app:layout_constraintVertical_bias="0.718" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="288dp"
         android:layout_height="110dp"
-        android:layout_marginTop="189dp"
-        android:layout_marginBottom="66dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/content_text_auth"
+        app:layout_constraintVertical_bias="0.113">
 
-        <Button
+        <ImageButton
             android:id="@+id/loginbutton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/login" />
+            android:layout_height="50dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@string/login"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/login_button___text" />
 
-        <Button
+        <ImageButton
             android:id="@+id/signupbutton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/signup" />
+            android:layout_height="54dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@string/string_signup"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/sign_up_button___text" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
