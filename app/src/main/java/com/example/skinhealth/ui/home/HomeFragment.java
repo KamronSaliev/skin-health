@@ -18,16 +18,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.skinhealth.DialogActivity;
+import com.example.skinhealth.DietScrollingActivity;
 import com.example.skinhealth.R;
 
 import java.io.ByteArrayOutputStream;
@@ -41,14 +40,12 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
 
-    private HomeViewModel homeViewModel;
-    private Button mainButton;
+    private ImageButton mainButton;
+    private ImageView dietButton;
     private DialogActivity dialog;
-    private TextView textView;
     private ImageView imageView;
     private Bitmap imageBmp = null;
     private Bitmap rotateImageBmp = null;
-    // private Uri imageUri;
     private String currentPhotoPath;
 
     private static final int GALLERY_REQUEST_CODE = 1;
@@ -56,20 +53,17 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        textView = root.findViewById(R.id.text_home);
         mainButton = root.findViewById(R.id.button_main);
+        dietButton = root.findViewById(R.id.dietImage);
         imageView = root.findViewById(R.id.imageView2);
 
+        onDietButtonClick();
         onAddPhotoButtonClick();
-
-        homeViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
 
         return root;
     }
-
 
     public void onAddPhotoButtonClick() {
         mainButton.setOnClickListener(v -> {
@@ -89,6 +83,16 @@ public class HomeFragment extends Fragment {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             dialog.show();
+        });
+    }
+
+    public void onDietButtonClick() {
+        dietButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent activityDiet = new Intent(getActivity().getApplicationContext(), DietScrollingActivity.class);
+                startActivity(activityDiet);
+            }
         });
     }
 

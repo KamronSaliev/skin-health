@@ -54,4 +54,26 @@
     <string name="diet_picture">diet picture</string>
     <string name="product_image">product image</string>
     <string name="camera_button">camera button</string>
+    <string name="title_activity_diet_scrolling">Recommended diet</string>
+    <string name="mild_diet">Drink enough water (normally 6-8 glasses per day)\nInclude healthy fats (avocado, oily fish)\n
+        Minimize milk products\nInclude enough Omega-3and Omega-6 products (chia seeds, oily fish, rapeseed oil, walnuts)\n
+        Eat more low glycaemic index carbs (beans, pulses, porridge, and other low-GI)\n
+        Reduce high glycaemic index carbs (sugar, sugary drinks, chocolate, cookies, and others)</string>
+    <string name="mild_mod">Drink enough water (normally 6-8 glasses)\nInclude healthy fats (avocado, oily fish)
+        \nInclude enough Omega-3and Omega-6 products (chia seeds, oily fish, rapeseed oil, walnuts)
+        \nEat more low glycaemic index carbs (beans, pulses, porridge, and other low-GI)
+        \nReduce high glycaemic index carbs (sugar, sugary drinks, chocolate, cookies,fastfood, and others)
+        \nReduce lactose (milk products)</string>
+    <string name="moderate">It is highly recommended to see a therapist and dermatologist\n
+        Drink enough water (normally 6-8 glasses per day)
+        \nInclude healthy fats (avocado, oily fish)
+        \nInclude enough Omega-3and Omega-6 products (chia seeds, oily fish, rapeseed oil, walnuts)
+        \nEat more low glycaemic index carbs (beans, pulses, porridge, and other low-GI)
+        \nExclude high glycaemic index carbs </string>
+    <string name="severe">You should see the doctors: therapist, dermatologist, endocrinologist, cosmetologist\n
+        Drink enough water (normally 6-8 glasses)\n
+        Include healthy fats (avocado, oily fish)\n
+        Include enough Omega-3and Omega-6  products (chia seeds, oily fish, rapeseed oil, walnuts)\n
+        Eat more low glycaemic index carbs (beans, pulses, porridge, and other low-GI)\n
+        Exclude high glycaemic index carbs  \n(sugar, chocolate, fastfood, and others)</string>
 </resources>

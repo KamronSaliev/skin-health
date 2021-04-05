@@ -18,7 +18,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity
@@ -39,6 +39,12 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".DietScrollingActivity"
+            android:label="@string/title_activity_diet_scrolling"
+            android:theme="@style/Theme.SkinHealth.NoActionBar">
         </activity>
 
         <activity
