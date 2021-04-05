@@ -250,22 +250,10 @@
                     android:src="@drawable/photo" />
             </FrameLayout>
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="311dp"
-                android:layout_height="421dp"
-                android:layout_marginStart="162dp"
-                android:layout_marginTop="204dp"
-                android:layout_marginEnd="153dp"
-                android:layout_marginBottom="57dp"
-                android:src="@drawable/account"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="invisible" />
         </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>
 
 
