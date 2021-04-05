@@ -42,10 +42,8 @@ import java.io.IOException;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    Button mainButton;
+    ImageButton mainButton;
     DialogActivity dialog;
-
-
     private static Bitmap Image = null;
     private static Bitmap rotateImage = null;
     private ImageView imageView;
@@ -56,15 +54,8 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-       final TextView textView = root.findViewById(R.id.text_home);
         mainButton = root.findViewById(R.id.button_main);
         onAddPhotoButtonClick();
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         imageView = root.findViewById(R.id.imageView2);
         return root;
     }
