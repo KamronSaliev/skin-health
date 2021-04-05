@@ -31,6 +31,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.skinhealth.DialogActivity;
+import com.example.skinhealth.DietScrollingActivity;
 import com.example.skinhealth.HomeActivity;
 import com.example.skinhealth.MainActivity;
 import com.example.skinhealth.R;
@@ -43,6 +44,7 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     ImageButton mainButton;
+    ImageView dietButton;
     DialogActivity dialog;
     private static Bitmap Image = null;
     private static Bitmap rotateImage = null;
@@ -55,6 +57,8 @@ public class HomeFragment extends Fragment {
                 new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         mainButton = root.findViewById(R.id.button_main);
+        dietButton = root.findViewById(R.id.dietImage);
+        onDietButtonClick();
         onAddPhotoButtonClick();
         imageView = root.findViewById(R.id.imageView2);
         return root;
@@ -86,6 +90,15 @@ public class HomeFragment extends Fragment {
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                 dialog.show();
+            }
+        });
+    }
+    public void onDietButtonClick() {
+        dietButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent activityDiet = new Intent(getActivity().getApplicationContext(), DietScrollingActivity.class);
+                startActivity(activityDiet);
             }
         });
     }

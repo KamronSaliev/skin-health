@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SkinHealth">
-        <activity android:name=".DialogActivity"></activity>
+        <activity
+            android:name=".DietScrollingActivity"
+            android:label="@string/title_activity_diet_scrolling"
+            android:theme="@style/Theme.SkinHealth.NoActionBar"></activity>
+        <activity android:name=".DialogActivity" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
@@ -19,11 +23,11 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".AuthActivity"
-            android:theme="@style/Theme.SkinHealth.NoActionBar"/>
+            android:theme="@style/Theme.SkinHealth.NoActionBar" />
         <activity
             android:name=".StartActivity"
-            android:theme="@style/Theme.SkinHealth.NoActionBar"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:theme="@style/Theme.SkinHealth.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,17 +37,17 @@
         <activity android:name=".MainActivity" />
     </application>
     <uses-feature
-        android:name="android.hardware.camera.autofocus"
-        android:required="false" />
-    <uses-feature
         android:name="android.hardware.camera.front"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.camera.front.autofocus"
         android:required="false" />
-
     <uses-feature
         android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
