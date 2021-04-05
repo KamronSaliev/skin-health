@@ -49,9 +49,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
-            android:src="@drawable/_skinhealth_severe"
-            android:contentDescription="TODO" />
-
+            android:src="@drawable/_skinhealth_severe" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,7 +87,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
