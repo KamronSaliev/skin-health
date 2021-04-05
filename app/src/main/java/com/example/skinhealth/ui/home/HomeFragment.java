@@ -1,40 +1,30 @@
 package com.example.skinhealth.ui.home;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.skinhealth.DialogActivity;
-import com.example.skinhealth.HomeActivity;
 import com.example.skinhealth.MainActivity;
 import com.example.skinhealth.R;
-import com.example.skinhealth.ui.login.LoginActivity;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -42,74 +32,77 @@ import java.io.IOException;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    Button mainButton;
-    DialogActivity dialog;
+    private Button mainButton;
+    private DialogActivity dialog;
 
-
-    private static Bitmap Image = null;
-    private static Bitmap rotateImage = null;
+    private TextView textView;
+    private Bitmap Image = null;
+    private Bitmap rotateImage = null;
     private ImageView imageView;
-    private static final int GALLERY = 1;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+    private static final int GALLERY_REQUEST_CODE = 1;
+    private static final int CAMERA_REQUEST_CODE = 2;
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-       final TextView textView = root.findViewById(R.id.text_home);
+
+        textView = root.findViewById(R.id.text_home);
         mainButton = root.findViewById(R.id.button_main);
-        onAddPhotoButtonClick();
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         imageView = root.findViewById(R.id.imageView2);
+
+        onAddPhotoButtonClick();
+
+        homeViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
+
         return root;
     }
 
 
     public void onAddPhotoButtonClick() {
-        mainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog = new DialogActivity(getActivity(), new DialogClickListener() {
+        mainButton.setOnClickListener(v -> {
+            dialog = new DialogActivity(getActivity(), new DialogClickListener() {
 
-                    public void onClickCamera() {
-                        Intent activityCamera = new Intent(getActivity(), MainActivity.class);
-                        startActivity(activityCamera);
-                    }
-                    public void onClickGallery() {
-                        imageView.setImageBitmap(null);
-                        if (Image != null)
-                            Image.recycle();
-                        Intent intent = new Intent();
-                        intent.setType("image/*");
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY);
-                    }
-                });
-                dialog.setCancelable(true);
-                dialog.setCanceledOnTouchOutside(true);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-                dialog.show();
-            }
+                public void onClickCamera() {
+                    Intent activityCamera = new Intent(getActivity(), MainActivity.class);
+                    startActivity(activityCamera);
+                }
+
+                public void onClickGallery() {
+                    imageView.setImageBitmap(null);
+
+                    if (Image != null)
+                        Image.recycle();
+
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_REQUEST_CODE);
+                }
+            });
+
+            dialog.setCancelable(true);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            dialog.show();
         });
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == GALLERY && resultCode != 0) {
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode != 0) {
             Uri mImageUri = data.getData();
             try {
                 Image = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), mImageUri);
                 if (getOrientation(getActivity().getApplicationContext(), mImageUri) != 0) {
                     Matrix matrix = new Matrix();
                     matrix.postRotate(getOrientation(getActivity().getApplicationContext(), mImageUri));
+
                     if (rotateImage != null)
                         rotateImage.recycle();
+
                     rotateImage = Bitmap.createBitmap(Image, 0, 0, Image.getWidth(), Image.getHeight(), matrix,true);
                     imageView.setImageBitmap(rotateImage);
                 } else
@@ -120,7 +113,6 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-
     }
 
     public static int getOrientation(Context context, Uri photoUri) {
