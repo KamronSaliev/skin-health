@@ -44,8 +44,8 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
+        View root = inflater.inflate(R.layout.temp_main_menu, container, false);
+       /* final TextView textView = root.findViewById(R.id.text_home);
         mainButton = root.findViewById(R.id.button_main);
         onAddPhotoButtonClick();
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -54,11 +54,11 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
-        imageView = root.findViewById(R.id.imageView2);
+        imageView = root.findViewById(R.id.imageView2);*/
         return root;
     }
 
-
+/*
     public void onAddPhotoButtonClick() {
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +82,8 @@ public class HomeFragment extends Fragment {
                 dialog.show();
             }
         });
-    }
-
+    }*/
+/*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode != Activity.RESULT_CANCELED) {
@@ -108,5 +108,5 @@ public class HomeFragment extends Fragment {
                     break;
             }
         }
-    }
+    }*/
 }

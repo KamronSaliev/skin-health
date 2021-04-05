@@ -19,6 +19,17 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="info_text">Skin Health helps to detect amount of acne on your face and recommends procedures suitable for you</string>
+    <string name="text_loading">Loading…</string>
+    <string name="current_stats_title">Current statistics: </string>
+    <string name="last_upd_title">Last updated: </string>
+    <string name="date_and_time">30.03.21, 12:30 pm</string>
+    <string name="num_of_pimples_title">Number of pimples: </string>
+    <string name="damage_text">Damage level:</string>
+    <string name="damage_level">Mild</string>
+    <string name="num_of_pimples">2</string>
+    <string name="diet_title">Recommended diet</string>
+    <string name="product_title">Recommended skin care products</string>
+
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
@@ -33,4 +44,7 @@
     <string name="contact">Contact us</string>
     <string name="logout">Log out</string>
     <string name="string_signup">Sign up</string>
+    <string name="diet_picture">diet picture</string>
+    <string name="product_image">product image</string>
+    <string name="camera_button">camera button</string>
 </resources>
