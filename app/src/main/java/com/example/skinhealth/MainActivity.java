@@ -160,9 +160,10 @@ public class MainActivity extends AppCompatActivity {
             mIntermediateMat = mSrcMat.clone();
 
             // TODO: extract to constants
+            // Increase brightness
             int brightnessAlpha = 1;
             int brightnessBeta = 50;
-            mIntermediateMat.convertTo(mIntermediateMat, -1, 1, 50);
+            mIntermediateMat.convertTo(mIntermediateMat, -1, brightnessAlpha, brightnessBeta);
 
             Imgproc.cvtColor(mIntermediateMat, mIntermediateMat, Imgproc.COLOR_BGR2GRAY);
 
@@ -183,8 +184,8 @@ public class MainActivity extends AppCompatActivity {
             Imgproc.resize(mMaskMat, mMaskMat, new Size(mIntermediateMat.size().width, mIntermediateMat.size().height));
             Imgproc.cvtColor(mMaskMat, mMaskMat, Imgproc.COLOR_BGR2GRAY);
             Imgproc.threshold(mMaskMat, mMaskMat, 100, 255, Imgproc.THRESH_BINARY_INV);
-            Core.bitwise_not(mMaskMat, mMaskMat);
-            Core.add(mMaskMat, mIntermediateMat, mIntermediateMat);
+            Core.bitwise_not(mMaskMat, mMaskMat);// inversion of colors of mask
+            Core.add(mMaskMat, mIntermediateMat, mIntermediateMat); // addition of the mask to the image in question
 
             // Main logic of detecting acne contours
             count = 0;
