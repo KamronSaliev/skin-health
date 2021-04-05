@@ -3,6 +3,7 @@
 
     // Used for detection
     <string name="btn_detect">Detect</string>
+    <string name="btn_choose_image">Choose Image</string>
     <string name="btn_reset">Reset</string>
     <string name="tv_count">Count:</string>
 
@@ -35,7 +36,6 @@
     <string name="num_of_pimples">2</string>
     <string name="diet_title">Recommended diet</string>
     <string name="product_title">Recommended skin care products</string>
-
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
