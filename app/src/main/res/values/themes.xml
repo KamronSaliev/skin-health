@@ -18,8 +18,8 @@
     <style name="Theme.SkinHealth.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:fontFamily">@font/berlin_sans_fb_regular</item>
     </style>
-
     <style name="Theme.SkinHealth.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.SkinHealth.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
