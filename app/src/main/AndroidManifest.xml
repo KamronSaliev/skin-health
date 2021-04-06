@@ -27,10 +27,10 @@
             android:theme="@style/Theme.SkinHealth.NoActionBar"
             android:noHistory="true"
             android:screenOrientation="portrait">
-<!--                <intent-filter>-->
-<!--                    <action android:name="android.intent.action.MAIN"/>-->
-<!--                    <category android:name="android.intent.category.LAUNCHER"/>-->
-<!--                </intent-filter>-->
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN"/>
+                    <category android:name="android.intent.category.LAUNCHER"/>
+                </intent-filter>
         </activity>
 
         <activity
@@ -38,10 +38,6 @@
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.SkinHealth.NoActionBar"
             android:screenOrientation="portrait">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN"/>-->
-<!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-<!--            </intent-filter>-->
         </activity>
 
         <activity
@@ -68,10 +64,6 @@
             android:name=".AuthActivity"
             android:theme="@style/Theme.SkinHealth.NoActionBar"
             android:screenOrientation="portrait">
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN"/>
-                    <category android:name="android.intent.category.LAUNCHER"/>
-                </intent-filter>
         </activity>
 
         <activity
@@ -82,10 +74,6 @@
         <activity android:name=".MainActivity"
             android:theme="@style/Theme.SkinHealth.NoActionBar"
             android:screenOrientation="portrait">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN"/>-->
-<!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-<!--            </intent-filter>-->
         </activity>
     </application>
 

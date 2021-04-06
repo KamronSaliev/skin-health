@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         String percentageText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_percentage), "??? %");
         textViewPercentage.setText(percentageText);
 
-        String levelText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_percentage), "Unknown");
+        String levelText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_level), "Unknown");
         textViewLevel.setText(levelText);
     }
 
@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
         String percentageText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_percentage), stringPercentage);
         textViewPercentage.setText(percentageText);
 
-        String levelText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_percentage), stringLevel);
+        String levelText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_level), stringLevel);
         textViewLevel.setText(levelText);
     }
 
