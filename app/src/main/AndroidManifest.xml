@@ -26,20 +26,20 @@
             android:name=".StartActivity"
             android:theme="@style/Theme.SkinHealth.NoActionBar"
             android:noHistory="true">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN"/>-->
-            <!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--            </intent-filter>-->
+<!--                <intent-filter>-->
+<!--                    <action android:name="android.intent.action.MAIN"/>-->
+<!--                    <category android:name="android.intent.category.LAUNCHER"/>-->
+<!--                </intent-filter>-->
         </activity>
 
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.SkinHealth.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN"/>-->
+<!--                <category android:name="android.intent.category.LAUNCHER"/>-->
+<!--            </intent-filter>-->
         </activity>
 
         <activity
@@ -61,7 +61,12 @@
 
         <activity
             android:name=".AuthActivity"
-            android:theme="@style/Theme.SkinHealth.NoActionBar"/>
+            android:theme="@style/Theme.SkinHealth.NoActionBar" >
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN"/>
+                    <category android:name="android.intent.category.LAUNCHER"/>
+                </intent-filter>
+        </activity>
 
         <activity
             android:name=".DialogActivity"

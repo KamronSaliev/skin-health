@@ -21,69 +21,78 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/start_version_4" />
 
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="351dp"
-        android:layout_height="68dp"
-        android:autofillHints=""
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        app:layout_constraintBottom_toBottomOf="@+id/background_happy"
-        app:layout_constraintEnd_toEndOf="@+id/background_happy"
-        app:layout_constraintStart_toStartOf="@+id/background_happy"
-        app:layout_constraintTop_toTopOf="@+id/background_happy"
-        app:layout_constraintVertical_bias="0.717" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="350dp"
-        android:layout_height="54dp"
-        android:autofillHints=""
-        android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="@+id/background_happy"
-        app:layout_constraintHorizontal_bias="0.492"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/main_text_login"
+        app:layout_constraintVertical_bias="0.85">
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="139dp"
-        android:layout_height="54dp"
-        android:layout_gravity="start"
-        android:layout_marginTop="24dp"
-        android:enabled="false"
-        android:fontFamily="@font/berlin_sans_fb_regular"
-        android:text="@string/action_sign_in_short"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/medium_green"
-        app:iconTint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/background_happy"
-        app:layout_constraintEnd_toEndOf="@+id/background_happy"
-        app:layout_constraintStart_toStartOf="@+id/background_happy"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.0" />
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="300dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints=""
+            android:background="@drawable/text_bg"
+            android:hint="@string/prompt_username"
+            android:inputType="textPersonName"
+            android:paddingLeft="16dp"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="300dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints=""
+            android:background="@drawable/text_bg"
+            android:fontFamily="@font/berlin_sans_fb_regular"
+            android:hint="@string/prompt_password"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:paddingLeft="16dp"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="300dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg"
+            android:fontFamily="@font/berlin_sans_fb_regular"
+            android:text="@string/action_sign_in_short"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
         android:layout_marginBottom="64dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/password"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/main_text_login"
@@ -99,6 +108,6 @@
         app:layout_constraintHorizontal_bias="0.419"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.024" />
+        app:layout_constraintVertical_bias="0.06999999" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,22 +17,19 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        ImageButton logInButton = findViewById(R.id.loginbutton);
+        Button logInButton = findViewById(R.id.loginbutton);
         logInButton.setOnClickListener(v -> {
             Intent activityLogIn = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(activityLogIn);
             finish();
         });
 
-        //  //todo: link other login activity class
-//        ImageButton signUpButton = findViewById(R.id.signupbutton);
-//        signUpButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                System.out.println("Sign Up Button Clicked");
-//                Intent activitySignUp = new Intent(getApplicationContext(), LoginActivity.class);
-//                startActivity(activitySignUp);
-//                finish();
-//            }
-//        });
+        Button signUpButton = findViewById(R.id.signupbutton);
+        signUpButton.setOnClickListener(v -> {
+            // TODO: implement logic for sign up, update intent
+            Intent activitySignUp = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(activitySignUp);
+            finish();
+        });
     }
 }
