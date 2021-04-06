@@ -6,7 +6,9 @@ import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +21,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +52,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -84,6 +88,14 @@ public class MainActivity extends AppCompatActivity {
 
     private String currentPhotoPath;
 
+    // Preferences
+    private static final String PREFS_COUNT_KEY = "count";
+    private static final String PREFS_LEVEL_KEY = "level";
+    private static final String PREFS_UPDATE_DATE_KEY = "update_date";
+
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor preferencesEditor;
+
     private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -110,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
         chooseImageButton = (Button) findViewById(R.id.btn_choose_image);
 
         onAddPhotoButtonClick();
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferencesEditor = preferences.edit();
     }
 
     public void onAddPhotoButtonClick() {
@@ -132,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
         });
     }
-
 
     private File createImageFile(){
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -235,6 +249,23 @@ public class MainActivity extends AppCompatActivity {
     public void onClickDetect(View view) {
         viewMode = VIEW_MODE_DETECT;
         imageView.setImageBitmap(onConvertImage());
+
+        onDetectSucceeded();
+    }
+
+    private void onDetectSucceeded() {
+        // TODO: implement the actual grading system for the damage levels, test code
+        if (count < 100) {
+            preferencesEditor.putString(PREFS_LEVEL_KEY, "Mild");
+        }
+        else
+            preferencesEditor.putString(PREFS_LEVEL_KEY, "Severe");
+
+        preferencesEditor.putString(PREFS_COUNT_KEY, String.valueOf(count));
+        preferencesEditor.putString(PREFS_UPDATE_DATE_KEY, new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+        preferencesEditor.apply();
+
+        Log.d(TAG, "Cached data");
     }
 
     @SuppressLint("DefaultLocale")

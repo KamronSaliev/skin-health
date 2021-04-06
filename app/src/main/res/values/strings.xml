@@ -32,10 +32,15 @@
     <string name="date_and_time">01.01.1970, 00:00</string>
     <string name="num_of_pimples_title">Number of pimples: </string>
     <string name="damage_text">Damage level:</string>
-    <string name="damage_level">Mild</string>
-    <string name="num_of_pimples">2</string>
+    <string name="num_of_pimples">100</string>
     <string name="diet_title">Recommended diet</string>
     <string name="product_title">Recommended skin care products</string>
+
+    <string name="damage_level_unknown">Unknown</string>
+    <string name="damage_level_mild">Mild</string>
+    <string name="damage_level_mildmoderate">Mild-Moderate</string>
+    <string name="damage_level_moderate">Moderate</string>
+    <string name="damage_level_severe">Severe</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
