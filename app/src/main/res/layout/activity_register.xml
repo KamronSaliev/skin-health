@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/orange"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:fontFamily="@font/berlin_sans_fb_regular"
+        android:gravity="center"
+        android:text="@string/string_signup"
+        android:textColor="@color/white"
+        android:textSize="45sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="@android:dimen/app_icon_size"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="2dp"
+            android:layout_weight="1"
+            android:inputType="textPersonName"
+            android:autofillHints="false"
+            android:text="@string/text_username"
+            >
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="2dp"
+            android:layout_weight="1"
+            android:inputType="textEmailAddress"
+            android:text="@string/prompt_email"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="2dp"
+            android:layout_weight="1"
+            android:inputType="textPassword"
+            android:text="@string/prompt_password"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/password_verification"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="2dp"
+            android:layout_weight="1"
+            android:inputType="textPassword"
+            android:text="@string/confirm_password"
+            android:importantForAutofill="no" />
+
+        <TextView
+            android:id="@+id/date_birth_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/berlin_sans_fb_regular"
+            android:gravity="start"
+            android:text="@string/text_date_select"
+            />
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:spinnersShown="true"/>
+
+        <ImageButton
+            android:id="@+id/signup_button"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@string/string_signup"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/sign_up_button___text" />
+        <!--        <Button-->
+        <!--            android:id="@+id/button6"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:layout_marginVertical="@dimen/dimen_last_updated_text_size"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:text="@string/action_register_in_short" />-->
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="@string/text_already_account"
+            android:textAlignment="textEnd"
+            android:textColor="@color/white"
+            android:textStyle="bold|italic"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/text_login_here"
+            android:textAlignment="textStart"
+            android:textColor="@color/medium_green"
+            android:textStyle="bold|italic"
+            tools:ignore="RtlCompat" />
+
+    </LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

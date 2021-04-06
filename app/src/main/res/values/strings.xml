@@ -3,9 +3,13 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="confirm_password">Confirm password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="action_register_in_short">Register</string>
+    <string name="date_of_birth">Date of birth</string>
     <string name="welcome">"Welcome !"</string>
+    <string name="text_username">Username</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
@@ -14,8 +18,8 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Dream Team</string>
+    <string name="nav_header_subtitle">dreamteam@mailforspam.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="info_text">Skin Health helps to detect amount of acne on your face and recommends procedures suitable for you</string>
@@ -29,6 +33,7 @@
     <string name="num_of_pimples">2</string>
     <string name="diet_title">Recommended diet</string>
     <string name="product_title">Recommended skin care products</string>
+    <string name="text_date_select">Select your date of birth:</string>
 
 
     <string name="menu_home">Home</string>
@@ -47,6 +52,8 @@
     <string name="logo_img">Logo Image</string>
     <string name="diet_picture">diet picture</string>
     <string name="product_image">product image</string>
+    <string name="text_already_account">Already have an account?</string>
+    <string name="text_login_here">Login here</string>
     <string name="camera_button">camera button</string>
     <string name="title_activity_diet_scrolling">Recommended diet</string>
     <string name="mild_diet">Drink enough water (normally 6-8 glasses per day)\nInclude healthy fats (avocado, oily fish)\n
