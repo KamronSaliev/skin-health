@@ -18,5 +18,5 @@
         android:id="@+id/navigation_severe"
         android:name="com.example.skinhealth.ui.severe.SevereFragment"
         android:label="Severe"
-        tools:layout="@layout/fragment_logout" />
+        tools:layout="@layout/fragment_severe" />
 </navigation>

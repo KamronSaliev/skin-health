@@ -23,13 +23,6 @@ public class ModerateFragment extends Fragment {
         moderateViewModel =
                 new ViewModelProvider(this).get(ModerateViewModel.class);
         View root = inflater.inflate(R.layout.fragment_moderate, container, false);
-        final TextView textView = root.findViewById(R.id.text_moderate);
-        moderateViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 }

@@ -89,7 +89,7 @@
         Include enough Omega-3and Omega-6  products (chia seeds, oily fish, rapeseed oil, walnuts)\n
         Eat more low glycaemic index carbs (beans, pulses, porridge, and other low-GI)\n
         Exclude high glycaemic index carbs  \n(sugar, chocolate, fastfood, and others)</string>
-    <string name="title_activity_skin">MainActivity</string>
+    <string name="title_activity_skin">SkinActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
