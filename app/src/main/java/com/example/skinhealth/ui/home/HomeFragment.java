@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.example.skinhealth.DietScrollingActivity;
 import com.example.skinhealth.MainActivity;
 import com.example.skinhealth.R;
+import com.example.skinhealth.SkinActivity;
 
 public class HomeFragment extends Fragment {
 
@@ -25,6 +26,7 @@ public class HomeFragment extends Fragment {
 
     private ImageButton mainButton;
     private ImageView dietButtonView;
+    private ImageView skinCareButton;
     private TextView damageLevelText;
     private TextView countText;
     private TextView lastUpdatedText;
@@ -44,13 +46,15 @@ public class HomeFragment extends Fragment {
 
         mainButton = root.findViewById(R.id.button_main);
         dietButtonView = root.findViewById(R.id.dietImage);
+        skinCareButton = root.findViewById(R.id.productImage);
 
         countText = root.findViewById(R.id.numOfPimles);
         damageLevelText = root.findViewById(R.id.textViewDamageLevel);
         lastUpdatedText = root.findViewById(R.id.textViewLastUpdated);
 
-        onDietButtonClick();
         onAddPhotoButtonClick();
+        onDietButtonClick();
+        onSkinCareButtonClick();
 
         UpdateData();
 
@@ -88,6 +92,13 @@ public class HomeFragment extends Fragment {
         dietButtonView.setOnClickListener(v -> {
             Intent activityDiet = new Intent(getActivity().getApplicationContext(), DietScrollingActivity.class);
             startActivity(activityDiet);
+        });
+    }
+
+    public void onSkinCareButtonClick() {
+        skinCareButton.setOnClickListener(v -> {
+            Intent activitySkin = new Intent(getActivity().getApplicationContext(), SkinActivity.class);
+            startActivity(activitySkin);
         });
     }
 }

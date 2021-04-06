@@ -23,5 +23,16 @@ public class AuthActivity extends AppCompatActivity {
             startActivity(activityLogIn);
             finish();
         });
+
+        //  //todo: link other login activity class
+//        ImageButton signUpButton = findViewById(R.id.signupbutton);
+//        signUpButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                System.out.println("Sign Up Button Clicked");
+//                Intent activitySignUp = new Intent(getApplicationContext(), LoginActivity.class);
+//                startActivity(activitySignUp);
+//                finish();
+//            }
+//        });
     }
 }
