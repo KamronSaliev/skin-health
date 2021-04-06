@@ -23,13 +23,6 @@ public class SevereFragment extends Fragment {
         severeViewModel =
                 new ViewModelProvider(this).get(SevereViewModel.class);
         View root = inflater.inflate(R.layout.fragment_severe, container, false);
-        final TextView textView = root.findViewById(R.id.text_severe);
-        severeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 }
