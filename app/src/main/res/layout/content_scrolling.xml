@@ -24,7 +24,6 @@
             android:background="@drawable/gradient_drawable_green"
             android:orientation="vertical">
 
-            <!--title and desc-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="15dp"
-                    android:text="Mild"
+                    android:text="Low"
                     android:transitionName="title"
                     android:textColor="@color/black"
                     android:textSize="28sp"
@@ -82,9 +81,9 @@
 
                 </LinearLayout>
             </LinearLayout>
-            <!--Price-->
+
             <RelativeLayout
-                android:layout_width="115dp"
+                android:layout_width="150dp"
                 android:layout_height="63dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
@@ -97,7 +96,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
-                    android:text="2 or less"
+                    android:text="20% or less"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -115,7 +114,6 @@
             android:background="@drawable/gradient_drawable_yellow"
             android:orientation="vertical">
 
-            <!--title and desc-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="15dp"
-                    android:text="Mild-Moderate"
+                    android:text="Mild"
                     android:transitionName="title"
                     android:textColor="@color/black"
                     android:textSize="28sp"
@@ -165,9 +163,9 @@
 
                 </LinearLayout>
             </LinearLayout>
-            <!--Price-->
+
             <RelativeLayout
-                android:layout_width="115dp"
+                android:layout_width="150dp"
                 android:layout_height="63dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
@@ -180,7 +178,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
-                    android:text="3 - 5"
+                    android:text="20% - 40%"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -198,7 +196,6 @@
             android:background="@drawable/gradient_drawable_orange"
             android:orientation="vertical">
 
-            <!--title and desc-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -248,9 +245,9 @@
 
                 </LinearLayout>
             </LinearLayout>
-            <!--Price-->
+
             <RelativeLayout
-                android:layout_width="115dp"
+                android:layout_width="150dp"
                 android:layout_height="63dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
@@ -263,7 +260,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
-                    android:text="5 - 7"
+                    android:text="40% - 70%"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -281,7 +278,6 @@
             android:background="@drawable/gradient_drawable_red"
             android:orientation="vertical">
 
-            <!--title and desc-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -331,9 +327,9 @@
 
                 </LinearLayout>
             </LinearLayout>
-            <!--Price-->
+
             <RelativeLayout
-                android:layout_width="115dp"
+                android:layout_width="150dp"
                 android:layout_height="63dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
@@ -346,7 +342,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
-                    android:text="7, more"
+                    android:text="70%, more"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     android:textStyle="bold" />
