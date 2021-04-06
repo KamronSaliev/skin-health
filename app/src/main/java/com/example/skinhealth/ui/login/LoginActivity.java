@@ -52,16 +52,19 @@ public class LoginActivity extends AppCompatActivity {
             if (loginResult == null) {
                 return;
             }
+
             if (loginResult.getError() != null) {
                 showLoginFailed(loginResult.getError());
             }
+            
             if (usernameEditText.getText().toString().equals("admin") && passwordEditText.getText().toString().equals("admin1")){
                 updateUiWithUser(loginResult.getSuccess());
-                }
-            setResult(Activity.RESULT_OK);
 
-            // Complete and destroy login activity once successful
-            finish();
+                setResult(Activity.RESULT_OK);
+
+                // Complete and destroy login activity once successful
+                finish();
+            }
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {

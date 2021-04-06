@@ -50,7 +50,7 @@
     <string name="damage_level_moderate">Moderate</string>
     <string name="damage_level_severe">Severe</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home">SkinHealth</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="choose_the_way">Choose the way to upload an image</string>
