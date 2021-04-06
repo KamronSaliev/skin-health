@@ -52,7 +52,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,11 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
     private DialogActivity dialog;
 
-    private Size size;
-
     private Mat mSrcMat;
     private Mat mIntermediateMat;
-    // private Mat mResizedMat;
     private Mat mMaskMat;
     private Mat mHierarchy;
 
@@ -78,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button chooseImageButton;
     private ImageView imageView;
-    private TextView textViewCounter;
+    private TextView textViewPercentage;
+    private TextView textViewLevel;
 
     private Bitmap bmp;
     private Bitmap initialBmp;
@@ -117,13 +114,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageView = (ImageView) findViewById(R.id.profile_image);
-        textViewCounter = (TextView) findViewById(R.id.tv_count);
+        textViewPercentage = (TextView) findViewById(R.id.tv_count);
+        textViewLevel = (TextView) findViewById(R.id.tv_level);
         chooseImageButton = (Button) findViewById(R.id.btn_choose_image);
 
         onAddPhotoButtonClick();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferencesEditor = preferences.edit();
+
+        String percentageText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_percentage), "??? %");
+        textViewPercentage.setText(percentageText);
+
+        String levelText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_percentage), "Unknown");
+        textViewLevel.setText(levelText);
     }
 
     public void onAddPhotoButtonClick() {
@@ -234,16 +238,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void onInit() {
         mIntermediateMat = new Mat();
-        size = new Size();
 
         BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
         initialBmp = bitmapDrawable.getBitmap();
     }
 
-    public void onClickReset(View view) {
-        viewMode = VIEW_MODE_RGBA;
-        imageView.setImageBitmap(onConvertImage());
-    }
+//    public void onClickReset(View view) {
+//        viewMode = VIEW_MODE_RGBA;
+//        imageView.setImageBitmap(onConvertImage());
+//    }
 
     public void onClickDetect(View view) {
         viewMode = VIEW_MODE_DETECT;
@@ -256,25 +259,34 @@ public class MainActivity extends AppCompatActivity {
         int maxPossibleCount = 250;
         float percentage = ((float) count / (float) maxPossibleCount) * 100;
 
+        String stringPercentage = String.format(Locale.getDefault(), "%.1f", percentage);
+        String stringLevel;
+
         if (percentage <= 20.0f) {
-            preferencesEditor.putString(PREFS_LEVEL_KEY, "Mild");
+            stringLevel = "Low";
         }
         else if (percentage > 20.0f && percentage <= 40.0f) {
-            preferencesEditor.putString(PREFS_LEVEL_KEY, "Mild-Moderate");
+            stringLevel = "Mild";
         }
         else if (percentage > 40.0f && percentage <= 70.0f) {
-            preferencesEditor.putString(PREFS_LEVEL_KEY, "Moderate");
+            stringLevel = "Moderate";
         }
         else {
-            preferencesEditor.putString(PREFS_LEVEL_KEY, "Severe");
+            stringLevel = "Severe";
         }
 
-        String stringPercentage = String.format(Locale.getDefault(), "%.1f", percentage);
+        preferencesEditor.putString(PREFS_LEVEL_KEY, stringLevel);
         preferencesEditor.putString(PREFS_COUNT_KEY, stringPercentage);
         preferencesEditor.putString(PREFS_UPDATE_DATE_KEY, new SimpleDateFormat("dd.MM.yyyy, HH:mm", Locale.getDefault()).format(new Date()));
         preferencesEditor.apply();
 
         Log.d(TAG, "Cached data");
+
+        String percentageText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_percentage), stringPercentage);
+        textViewPercentage.setText(percentageText);
+
+        String levelText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_percentage), stringLevel);
+        textViewLevel.setText(levelText);
     }
 
     @SuppressLint("DefaultLocale")
@@ -290,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         if (MainActivity.viewMode == MainActivity.VIEW_MODE_RGBA) {
             count = 0;
             String stringCounter = getResources().getString(R.string.tv_count);
-            textViewCounter.setText(String.format("%s %d", stringCounter, count));
+            textViewPercentage.setText(String.format("%s %d", stringCounter, count));
 
             return bmp;
         }
@@ -299,24 +311,8 @@ public class MainActivity extends AppCompatActivity {
         else if (MainActivity.viewMode == MainActivity.VIEW_MODE_DETECT) {
             Log.i(TAG, "Detect button was pressed");
 
-            // Random seed
-            Random rng = new Random(10000);
-
-            Size srcSize = mSrcMat.size();
-            Log.i(TAG, srcSize.toString());
-
-            // TODO: Resize logic, might be used later
-            int referencedHeightInDP = 500;
-            float scale = getResources().getDisplayMetrics().density;
-            int referencedHeightInPixels = (int) (referencedHeightInDP * scale + 0.5f);
-
-            // mResizedMat = new Mat();
-            // Imgproc.resize(mSrcMat, mResizedMat, new Size(srcSize.width, referencedHeightInPixels));
-
-            // mSrcMat = mResizedMat.clone();
             mIntermediateMat = mSrcMat.clone();
 
-            // TODO: extract to constants
             // Increase brightness
             int brightnessAlpha = 1;
             int brightnessBeta = 50;
@@ -357,7 +353,6 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i = 0; i < contours.size(); i++) {
 
-                // TODO: extract to constants
                 int minArea = 20;
                 int maxArea = 150;
 
@@ -369,7 +364,6 @@ public class MainActivity extends AppCompatActivity {
                     Imgproc.minEnclosingCircle(contoursPoly[i], centers[i], radius[i]);
 
 
-                    // TODO: extract to constants
                     if (boundRect[i].height < 3 || boundRect[i].width < 3)
                         continue;
 
@@ -380,15 +374,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            // TODO: Temporary, remove, used for visualization of the mask used to find contours
             // mSrcMat = mIntermediateMat.clone();
-
-
-            int maxPossibleCount = 250;
-            float percentage = ((float) count / (float) maxPossibleCount) * 100;
-            String stringPercentage = String.format(Locale.getDefault(), "%.1f", percentage);
-            String percentageText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_percentage), stringPercentage);
-            textViewCounter.setText(percentageText);
         }
 
         bmp = Bitmap.createBitmap(mSrcMat.cols(), mSrcMat.rows(), Bitmap.Config.ARGB_8888);

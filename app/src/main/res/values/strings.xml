@@ -7,6 +7,7 @@
     <string name="btn_reset">Reset</string>
     <string name="tv_count">Pimples:</string>
     <string name="tv_percentage">Percentage:</string>
+    <string name="tv_level">Acne Level:</string>
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>

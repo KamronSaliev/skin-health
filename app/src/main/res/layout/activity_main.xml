@@ -38,9 +38,19 @@
             android:id="@+id/tv_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="@string/tv_count"
-            android:textSize="30sp" />
+            android:text="@string/tv_percentage"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tv_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/tv_level"
+            android:textSize="24sp" />
 
         <ImageView
             android:id="@+id/profile_image"
@@ -93,18 +103,18 @@
                 android:textSize="18sp"
                 tools:ignore="ButtonStyle" />
 
-            <Button
-                android:id="@+id/btn_reset"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-medium"
-                android:onClick="onClickReset"
-                android:text="@string/btn_reset"
-                android:textAllCaps="true"
-                android:textSize="18sp"
-                tools:ignore="ButtonStyle" />
+<!--            <Button-->
+<!--                android:id="@+id/btn_reset"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="56dp"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:fontFamily="sans-serif-medium"-->
+<!--                android:onClick="onClickReset"-->
+<!--                android:text="@string/btn_reset"-->
+<!--                android:textAllCaps="true"-->
+<!--                android:textSize="18sp"-->
+<!--                tools:ignore="ButtonStyle" />-->
 
         </LinearLayout>
 
