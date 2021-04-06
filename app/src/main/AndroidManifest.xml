@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SkinHealth">
         <activity
+            android:name=".SkinActivity"
+            android:label="@string/title_activity_skin"></activity>
+        <activity
             android:name=".DietScrollingActivity"
             android:label="@string/title_activity_diet_scrolling"
-            android:theme="@style/Theme.SkinHealth.NoActionBar"></activity>
+            android:theme="@style/Theme.SkinHealth.NoActionBar" />
         <activity android:name=".DialogActivity" />
         <activity
             android:name=".HomeActivity"
@@ -37,17 +40,17 @@
         <activity android:name=".MainActivity" />
     </application>
     <uses-feature
-        android:name="android.hardware.camera.front"
-        android:required="false" />
-    <uses-feature
         android:name="android.hardware.camera.front.autofocus"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-
     <uses-feature
         android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.camera.front"
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />

@@ -35,6 +35,7 @@ import com.example.skinhealth.DietScrollingActivity;
 import com.example.skinhealth.HomeActivity;
 import com.example.skinhealth.MainActivity;
 import com.example.skinhealth.R;
+import com.example.skinhealth.SkinActivity;
 import com.example.skinhealth.ui.login.LoginActivity;
 
 import java.io.FileNotFoundException;
@@ -44,7 +45,7 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     ImageButton mainButton;
-    ImageView dietButton;
+    ImageView dietButton, skinCareButton;
     DialogActivity dialog;
     private static Bitmap Image = null;
     private static Bitmap rotateImage = null;
@@ -58,7 +59,9 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         mainButton = root.findViewById(R.id.button_main);
         dietButton = root.findViewById(R.id.dietImage);
+        skinCareButton = root.findViewById(R.id.productImage);
         onDietButtonClick();
+        onSkinCareButtonClick();
         onAddPhotoButtonClick();
         imageView = root.findViewById(R.id.imageView2);
         return root;
@@ -99,6 +102,16 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent activityDiet = new Intent(getActivity().getApplicationContext(), DietScrollingActivity.class);
                 startActivity(activityDiet);
+            }
+        });
+    }
+
+    public void onSkinCareButtonClick() {
+        skinCareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent activitySkin = new Intent(getActivity().getApplicationContext(), SkinActivity.class);
+                startActivity(activitySkin);
             }
         });
     }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_mild">
+    <fragment
+        android:id="@+id/navigation_mild"
+        android:name="com.example.skinhealth.ui.mild.MildFragment"
+        android:label="Mild"
+        tools:layout="@layout/fragment_mild" />
+    <fragment
+        android:id="@+id/navigation_moderate"
+        android:name="com.example.skinhealth.ui.moderate.ModerateFragment"
+        android:label="Moderate"
+        tools:layout="@layout/fragment_moderate" />
+    <fragment
+        android:id="@+id/navigation_severe"
+        android:name="com.example.skinhealth.ui.severe.SevereFragment"
+        android:label="Severe"
+        tools:layout="@layout/fragment_logout" />
+</navigation>
