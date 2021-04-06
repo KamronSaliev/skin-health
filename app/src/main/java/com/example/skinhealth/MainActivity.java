@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         preferencesEditor.putString(PREFS_LEVEL_KEY, stringLevel);
-        preferencesEditor.putString(PREFS_COUNT_KEY, stringPercentage);
+        preferencesEditor.putString(PREFS_COUNT_KEY, String.format("%s %%", stringPercentage));
         preferencesEditor.putString(PREFS_UPDATE_DATE_KEY, new SimpleDateFormat("dd.MM.yyyy, HH:mm", Locale.getDefault()).format(new Date()));
         preferencesEditor.apply();
 
