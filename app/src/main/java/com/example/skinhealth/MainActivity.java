@@ -6,7 +6,6 @@ import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -254,15 +253,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onDetectSucceeded() {
-        // TODO: implement the actual grading system for the damage levels, test code
-        if (count < 100) {
+        int maxPossibleCount = 250;
+        float percentage = ((float) count / (float) maxPossibleCount) * 100;
+
+        if (percentage <= 20.0f) {
             preferencesEditor.putString(PREFS_LEVEL_KEY, "Mild");
         }
-        else
+        else if (percentage > 20.0f && percentage <= 40.0f) {
+            preferencesEditor.putString(PREFS_LEVEL_KEY, "Mild-Moderate");
+        }
+        else if (percentage > 40.0f && percentage <= 70.0f) {
+            preferencesEditor.putString(PREFS_LEVEL_KEY, "Moderate");
+        }
+        else {
             preferencesEditor.putString(PREFS_LEVEL_KEY, "Severe");
+        }
 
-        preferencesEditor.putString(PREFS_COUNT_KEY, String.valueOf(count));
-        preferencesEditor.putString(PREFS_UPDATE_DATE_KEY, new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+        String stringPercentage = String.format(Locale.getDefault(), "%.1f", percentage);
+        preferencesEditor.putString(PREFS_COUNT_KEY, stringPercentage);
+        preferencesEditor.putString(PREFS_UPDATE_DATE_KEY, new SimpleDateFormat("dd.MM.yyyy, HH:mm", Locale.getDefault()).format(new Date()));
         preferencesEditor.apply();
 
         Log.d(TAG, "Cached data");
@@ -374,8 +383,12 @@ public class MainActivity extends AppCompatActivity {
             // TODO: Temporary, remove, used for visualization of the mask used to find contours
             // mSrcMat = mIntermediateMat.clone();
 
-            String stringCounter = getResources().getString(R.string.tv_count);
-            textViewCounter.setText(String.format("%s %d", stringCounter, count));
+
+            int maxPossibleCount = 250;
+            float percentage = ((float) count / (float) maxPossibleCount) * 100;
+            String stringPercentage = String.format(Locale.getDefault(), "%.1f", percentage);
+            String percentageText = String.format(Locale.getDefault(), "%s %s", getResources().getString(R.string.tv_percentage), stringPercentage);
+            textViewCounter.setText(percentageText);
         }
 
         bmp = Bitmap.createBitmap(mSrcMat.cols(), mSrcMat.rows(), Bitmap.Config.ARGB_8888);
@@ -465,7 +478,7 @@ public class MainActivity extends AppCompatActivity {
         imageView.setImageBitmap(rotatedBitmap);
     }
 
-    public static Bitmap rotate(Bitmap bitmap, int degree) {
+    private Bitmap rotate(Bitmap bitmap, int degree) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
 

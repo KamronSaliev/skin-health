@@ -20,6 +20,8 @@ import com.example.skinhealth.MainActivity;
 import com.example.skinhealth.R;
 import com.example.skinhealth.SkinActivity;
 
+import java.util.Locale;
+
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
@@ -28,7 +30,7 @@ public class HomeFragment extends Fragment {
     private ImageView dietButtonView;
     private ImageView skinCareButton;
     private TextView damageLevelText;
-    private TextView countText;
+    private TextView percentageText;
     private TextView lastUpdatedText;
 
     private static final String PREFS_COUNT_KEY = "count";
@@ -36,7 +38,7 @@ public class HomeFragment extends Fragment {
     private static final String PREFS_UPDATE_DATE_KEY = "update_date";
 
     private SharedPreferences preferences;
-    private String currentCount;
+    private String currentPercentage;
     private String currentLevel;
     private String lastUpdatedDate;
 
@@ -48,7 +50,7 @@ public class HomeFragment extends Fragment {
         dietButtonView = root.findViewById(R.id.dietImage);
         skinCareButton = root.findViewById(R.id.productImage);
 
-        countText = root.findViewById(R.id.numOfPimles);
+        percentageText = root.findViewById(R.id.numOfPimles);
         damageLevelText = root.findViewById(R.id.textViewDamageLevel);
         lastUpdatedText = root.findViewById(R.id.textViewLastUpdated);
 
@@ -70,11 +72,11 @@ public class HomeFragment extends Fragment {
 
     private void UpdateData() {
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        currentCount = preferences.getString(PREFS_COUNT_KEY, "0");
+        currentPercentage = preferences.getString(PREFS_COUNT_KEY, "??? %");
         currentLevel = preferences.getString(PREFS_LEVEL_KEY, "Unknown");
-        lastUpdatedDate = preferences.getString(PREFS_UPDATE_DATE_KEY, "1970");
+        lastUpdatedDate = preferences.getString(PREFS_UPDATE_DATE_KEY, "01.01.1970, 00:00");
 
-        countText.setText(currentCount);
+        percentageText.setText(currentPercentage);
         damageLevelText.setText(currentLevel);
         lastUpdatedText.setText(lastUpdatedDate);
 
