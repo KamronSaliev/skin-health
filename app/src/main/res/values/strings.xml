@@ -5,7 +5,8 @@
     <string name="btn_detect">Detect</string>
     <string name="btn_choose_image">Choose Image</string>
     <string name="btn_reset">Reset</string>
-    <string name="tv_count">Count:</string>
+    <string name="tv_count">Pimples:</string>
+    <string name="tv_percentage">Percentage:</string>
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -34,8 +35,8 @@
     <string name="current_stats_title">Current statistics: </string>
     <string name="last_upd_title">Last updated: </string>
     <string name="date_and_time">01.01.1970, 00:00</string>
-    <string name="num_of_pimples_title">Number of pimples: </string>
-    <string name="damage_text">Damage level:</string>
+    <string name="num_of_pimples_title">Acne percentage: </string>
+    <string name="damage_text">Acne level:</string>
     <string name="num_of_pimples">100</string>
     <string name="diet_title">Recommended diet</string>
     <string name="product_title">Recommended skin care products</string>
